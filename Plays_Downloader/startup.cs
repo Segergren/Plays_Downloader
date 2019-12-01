@@ -22,52 +22,6 @@ namespace Plays_Downloader
         public static extern bool ReleaseCapture();
         /* END move window */
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            /* This timer make sure the window to load for the user */
-            start.Stop();
-
-            /* Installs geckoBrowser */
-            if(!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"))){
-                File.WriteAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"), Properties.Resources.Firefox);
-            }          
-            FileInfo FileInfo = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"));
-            FileInfo.Attributes |= FileAttributes.Hidden;
-
-            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"))){
-                try
-                {
-                    Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"), true);
-                }
-                catch {
-                }
-            }
-            
-            System.Threading.Thread.Sleep(1000);
-            if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"))) 
-                    ZipFile.ExtractToDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
-
-            DirectoryInfo di = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
-
-            //See if directory has hidden flag, if not, make hidden
-            if ((di.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
-            {
-                //Add Hidden flag                 
-                di.Attributes |= FileAttributes.Hidden;
-            }
-            /* END install */
-
-            //Wait to make sure Firefox folder is 100% downloaded
-            System.Threading.Thread.Sleep(2000);
-
-            //Opens main window
-            this.Hide();
-            Plays sistema = new Plays();
-            sistema.ShowDialog();
-            this.Close();
-            
-        }
-
         private void startup_Paint(object sender, PaintEventArgs e)
         {
             //Blue corners
@@ -95,6 +49,54 @@ namespace Plays_Downloader
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
+        }
+
+        private void start_Tick(object sender, EventArgs e)
+        {
+            /* This timer make sure the window to load for the user */
+            start.Stop();
+
+            /* Installs geckoBrowser */
+            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip")))
+            {
+                File.WriteAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"), Properties.Resources.Firefox);
+            }
+            FileInfo FileInfo = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"));
+            FileInfo.Attributes |= FileAttributes.Hidden;
+
+            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox")))
+            {
+                try
+                {
+                    Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"), true);
+                }
+                catch
+                {
+                }
+            }
+
+            System.Threading.Thread.Sleep(1000);
+            if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox")))
+                ZipFile.ExtractToDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
+
+            DirectoryInfo di = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
+
+            //See if directory has hidden flag, if not, make hidden
+            if ((di.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+            {
+                //Add Hidden flag                 
+                di.Attributes |= FileAttributes.Hidden;
+            }
+            /* END install */
+
+            //Wait to make sure Firefox folder is 100% downloaded
+            System.Threading.Thread.Sleep(2000);
+
+            //Opens main window
+            this.Hide();
+            Plays sistema = new Plays();
+            sistema.ShowDialog();
+            this.Close();
         }
     }
 }

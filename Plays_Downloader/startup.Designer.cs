@@ -38,7 +38,7 @@
             // 
             this.start.Enabled = true;
             this.start.Interval = 1000;
-            this.start.Tick += new System.EventHandler(this.timer1_Tick);
+            this.start.Tick += new System.EventHandler(this.start_Tick);
             // 
             // st
             // 
