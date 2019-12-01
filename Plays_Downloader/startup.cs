@@ -22,11 +22,6 @@ namespace Plays_Downloader
         public static extern bool ReleaseCapture();
         /* END move window */
 
-        private void startup_Load(object sender, EventArgs e)
-        {          
-                     
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             /* This timer make sure the window to load for the user */

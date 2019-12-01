@@ -65,7 +65,6 @@
             this.Name = "startup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loading";
-            this.Load += new System.EventHandler(this.startup_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.startup_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.startup_MouseDown);
             this.ResumeLayout(false);
