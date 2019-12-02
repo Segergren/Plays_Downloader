@@ -508,7 +508,6 @@ namespace Plays_Downloader
             dntscreenshots.Hide();
 
             //Login
-            publiconly = false;
             geckoWebBrowser.Document.GetElementById("login_urlname").SetAttribute("value", usernametb.Text);
             geckoWebBrowser.Document.GetElementById("login_pwd").SetAttribute("value", passwordtb.Text);
             GeckoButtonElement button = new GeckoButtonElement(geckoWebBrowser.Document.GetElementsByClassName("btn")[1].DomObject);
