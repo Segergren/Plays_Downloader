@@ -50,6 +50,7 @@ namespace Plays_Downloader
         bool done3 = false;
         bool done4 = false;
         string sort = "";
+        string dateString = "";
         int curdown = 0;
         /* EXTRA INFORMATION FOR DID YOU KNOW */
         double infoclipseconds = 0;
@@ -211,6 +212,7 @@ namespace Plays_Downloader
             List<string> nameList = new List<string>();
             List<string> downloadlinkList = new List<string>();
             List<string> typeList = new List<string>();
+            List<string> dateList = new List<string>();
             for (int i = 0; i < items.Count; i++)
             {
                 dynamic item = (JObject)items[i];
@@ -220,6 +222,7 @@ namespace Plays_Downloader
                 string name = item.description;
                 string downloadlink = item.downloadUrl;
                 string type = item.type;
+                string date = item.created;
                 if ((dntscreenshots.Checked == true) && (type.Contains("image") == true))
                 {
 
@@ -235,6 +238,7 @@ namespace Plays_Downloader
                         nameList.Add(name);
                         downloadlinkList.Add(downloadlink);
                         typeList.Add(type);
+                        dateList.Add(Convert.ToString(date).Replace("000", ""));
                     }
                 }
 
@@ -269,6 +273,17 @@ namespace Plays_Downloader
                 {
                     sort = "[" + (i + 1) + "] ";
                 }
+                if (incDate.Checked)
+                {
+                    if(paranthesiscbx.Checked == true)
+                    {
+                        dateString =  (" (" + (UnixTimeStampToDateTime(Convert.ToDouble(dateList[i]))).ToShortDateString() + ")").Replace("/","-");
+                    }
+                    else
+                    {
+                        dateString = (" " + (UnixTimeStampToDateTime(Convert.ToDouble(dateList[i]))).ToShortDateString()).Replace("/", "-");
+                    }                   
+                }
 
                 //Gets current video information
                 string name = Convert.ToString(nameList[i]);
@@ -278,18 +293,18 @@ namespace Plays_Downloader
                 //Replaces bad names
                 Regex illegalInFileName = new Regex(@"[\\/:*?""<>|]");
                 name = illegalInFileName.Replace(name, "_");
-
+                dateString = illegalInFileName.Replace(dateString, "_");
                 //Checks if it's an image or not
                 if (type == "image")
                 {
                     if (incscreenshots.Checked == true)
                     {
-                        DownloadFile(downloadlink, path + @"\" + sort + name + ".jpeg");
+                        DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".jpeg");
                     }
                 }
                 else
                 {
-                    DownloadFile(downloadlink, path + @"\" + sort + name + ".mp4");
+                    DownloadFile(downloadlink, path + @"\" + sort + name + dateString +".mp4");
                 }
 
                 await PutTaskDelay(3500);
@@ -412,7 +427,23 @@ namespace Plays_Downloader
 
         private void closebtn_Click(object sender, EventArgs e)
         {
+            //If a video is downloading right now
+            if((curdown != videosfound - 1) && done4 == false && done3 == true)
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to quit?", "Still downloading...", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    quitApp();
+                }
+            }
+            else
+            {
+                quitApp();
+            }
+        }
 
+        private void quitApp()
+        {
             /* Removes the firefox folder after the user closed the program */
             string batchCommands = string.Empty;
             string exeFileName = AppDomain.CurrentDomain.BaseDirectory + "Firefox";
@@ -435,7 +466,6 @@ namespace Plays_Downloader
             p.Start();
             Environment.Exit(0);
         }
-
         private void minimizebtn_Click(object sender, EventArgs e)
         {
             //Minimizes the window
@@ -500,9 +530,11 @@ namespace Plays_Downloader
         }
         public void Start()
         {
-            //Hide radiobuttons
+            //Hide radiobuttons and checkboxes
             pandu.Hide();
             ponly.Hide();
+            incDate.Hide();
+            paranthesiscbx.Hide();
 
             incscreenshots.Hide();
             dntscreenshots.Hide();
@@ -603,6 +635,20 @@ namespace Plays_Downloader
                 infoCounter++;
             }
 
+        }
+
+        private void incDate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (incDate.Checked)
+            {
+                paranthesiscbx.Show();
+                paranthesiscbx.Checked = true;
+            }
+            else
+            {
+                paranthesiscbx.Hide();
+                paranthesiscbx.Checked = false;
+            }
         }
     }
 }
