@@ -133,11 +133,19 @@ namespace Plays_Downloader
             JArray JSONInfoformated = JArray.Parse(JSONInfoUnformated);
             string LatestVersion = (string)JSONInfoformated[0]["tag_name"];
 
+            GithubProfileLink = (string)JSONInfoformated[0]["assets_url"];
+            JSONInfoUnformated = GetReleases(GithubProfileLink);
+            JSONInfoformated = JArray.Parse(JSONInfoUnformated);
+            string DownloadLink = (string)JSONInfoformated[0]["browser_download_url"];
+            
+
             //If there is a new update available
             if (LatestVersion != version)
             {
-                MessageBox.Show("There is an update available! Click OK to update", "New update!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                UpdateSoftware(GithubProfileLink);
+                MessageBox.Show("There is an update available! Click OK to update\nYour version: " + version + "\nNew version: " + LatestVersion ,"New update!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Process.Start(DownloadLink);
+                Environment.Exit(0);
+                //UpdateSoftware(GithubProfileLink);
             }
             else
             {
@@ -149,17 +157,21 @@ namespace Plays_Downloader
         {
             //Updates the software
 
-            var fileName = Path.GetTempPath() + @"\O11SoftwareUpdateInfo";
-            System.IO.File.WriteAllText(fileName, GithubProfileLink + "\n" + Application.ExecutablePath);
-
+            /*
+            //var fileName = Path.GetTempPath() + @"\O11SoftwareUpdateInfo";
+            //System.IO.File.WriteAllText(fileName, GithubProfileLink + "\n" + Application.ExecutablePath);
+            
             string JSONInfoUnformated = GetReleases("https://api.github.com/repos/O11Software/O11Software_Updater/releases");
             JArray JSONInfoformated = JArray.Parse(JSONInfoUnformated);
             string Asset = (string)JSONInfoformated[0]["assets_url"];
 
+            
             JSONInfoUnformated = GetReleases(Asset);
             JSONInfoformated = JArray.Parse(JSONInfoUnformated);
             string UpdateDownloadLink = (string)JSONInfoformated[0]["browser_download_url"];
-
+            Process.Start(UpdateDownloadLink);
+            Environment.Exit(0);
+            
             string UpdateEXELocation = Path.GetTempPath() + @"\O11Updater.exe";
             using (WebClient webClient = new WebClient())
             {
@@ -176,8 +188,8 @@ namespace Plays_Downloader
                 proc.StartInfo.UseShellExecute = true;
                 proc.StartInfo.Verb = "runas";
                 proc.Start();
-            }
-            Environment.Exit(0);
+            }            
+            */
         }
 
         private string GetReleases(string GithubProfileLink)
