@@ -3,6 +3,10 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.IO;
+using System.Linq;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Plays_Downloader
 {
@@ -80,7 +84,7 @@ namespace Plays_Downloader
                 ZipFile.ExtractToDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temporary.zip"), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
 
             DirectoryInfo di = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Firefox"));
-
+            
             //See if directory has hidden flag, if not, make hidden
             if ((di.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
             {
@@ -88,15 +92,102 @@ namespace Plays_Downloader
                 di.Attributes |= FileAttributes.Hidden;
             }
             /* END install */
+            long FolderSize = di.EnumerateFiles("*.*", SearchOption.AllDirectories).Sum(fi => fi.Length);
 
-            //Wait to make sure Firefox folder is 100% downloaded
-            System.Threading.Thread.Sleep(2000);
+            //Check if the Firefox folder is extracted
+            int tries = 0; 
+            while (FolderSize != 70813153) //70813153
+            {
+                if(tries == 200)
+                {
+                    MessageBox.Show("Can't install needed libraries, try to disable your Anti-virus software.", "Error...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+                System.Threading.Thread.Sleep(100);
+                tries++;
+            }
+            
 
             //Opens main window
             this.Hide();
             Plays sistema = new Plays();
             sistema.ShowDialog();
             this.Close();
+        }
+        
+        private void startup_Load(object sender, EventArgs e)
+        {
+            SearchForUpdate("https://api.github.com/repos/O11Software/Plays_Downloader/releases");
+        }
+
+        private void SearchForUpdate(string GithubProfileLink)
+        {
+            //Checks for an update
+            //https://api.github.com/repos/O11Software/X/releases
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = "v" + fvi.FileMajorPart + "." + fvi.FileMinorPart + "." + fvi.FileBuildPart;
+
+            //Gets the latest update
+            string JSONInfoUnformated = GetReleases(GithubProfileLink);
+            JArray JSONInfoformated = JArray.Parse(JSONInfoUnformated);
+            string LatestVersion = (string)JSONInfoformated[0]["tag_name"];
+
+            //If there is a new update available
+            if (LatestVersion != version)
+            {
+                MessageBox.Show("There is an update available! Click OK to update", "New update!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                UpdateSoftware(GithubProfileLink);
+            }
+            else
+            {
+                start.Start();
+            }
+        }
+
+        private void UpdateSoftware(string GithubProfileLink)
+        {
+            //Updates the software
+
+            var fileName = Path.GetTempPath() + @"\O11SoftwareUpdateInfo";
+            System.IO.File.WriteAllText(fileName, GithubProfileLink + "\n" + Application.ExecutablePath);
+
+            string JSONInfoUnformated = GetReleases("https://api.github.com/repos/O11Software/O11Software_Updater/releases");
+            JArray JSONInfoformated = JArray.Parse(JSONInfoUnformated);
+            string Asset = (string)JSONInfoformated[0]["assets_url"];
+
+            JSONInfoUnformated = GetReleases(Asset);
+            JSONInfoformated = JArray.Parse(JSONInfoUnformated);
+            string UpdateDownloadLink = (string)JSONInfoformated[0]["browser_download_url"];
+
+            string UpdateEXELocation = Path.GetTempPath() + @"\O11Updater.exe";
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.DownloadFile(UpdateDownloadLink, UpdateEXELocation);
+            }
+            try
+            {
+                Process.Start(UpdateEXELocation);
+            }
+            catch
+            {
+                Process proc = new Process();
+                proc.StartInfo.FileName = UpdateEXELocation;
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.Verb = "runas";
+                proc.Start();
+            }
+            Environment.Exit(0);
+        }
+
+        private string GetReleases(string GithubProfileLink)
+        {
+            string GITHUB_API = GithubProfileLink;
+            WebClient webClient = new WebClient();
+            webClient.Headers.Add("User-Agent", "Unity web player");
+            Uri uri = new Uri(string.Format(GITHUB_API));
+            string releases = webClient.DownloadString(uri);
+            return releases;
         }
     }
 }
