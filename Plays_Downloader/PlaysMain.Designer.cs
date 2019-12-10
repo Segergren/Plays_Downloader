@@ -53,6 +53,8 @@
             this.ponly = new System.Windows.Forms.Button();
             this.pandu = new System.Windows.Forms.Button();
             this.sortPanel = new System.Windows.Forms.Panel();
+            this.paranthesiscbx = new System.Windows.Forms.CheckBox();
+            this.incDate = new System.Windows.Forms.CheckBox();
             this.screenshotPanel = new System.Windows.Forms.Panel();
             this.incscreenshots = new System.Windows.Forms.RadioButton();
             this.dntscreenshots = new System.Windows.Forms.RadioButton();
@@ -61,8 +63,6 @@
             this.infolbl = new System.Windows.Forms.Label();
             this.Infotimer = new System.Windows.Forms.Timer(this.components);
             this.didyouknow = new System.Windows.Forms.Label();
-            this.incDate = new System.Windows.Forms.CheckBox();
-            this.paranthesiscbx = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.closebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minimizebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.folderpicker)).BeginInit();
@@ -314,6 +314,30 @@
             this.sortPanel.Size = new System.Drawing.Size(145, 90);
             this.sortPanel.TabIndex = 20;
             // 
+            // paranthesiscbx
+            // 
+            this.paranthesiscbx.AutoSize = true;
+            this.paranthesiscbx.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
+            this.paranthesiscbx.Location = new System.Drawing.Point(3, 66);
+            this.paranthesiscbx.Name = "paranthesiscbx";
+            this.paranthesiscbx.Size = new System.Drawing.Size(118, 17);
+            this.paranthesiscbx.TabIndex = 18;
+            this.paranthesiscbx.Text = "Include paranthesis";
+            this.paranthesiscbx.UseVisualStyleBackColor = true;
+            this.paranthesiscbx.Visible = false;
+            // 
+            // incDate
+            // 
+            this.incDate.AutoSize = true;
+            this.incDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
+            this.incDate.Location = new System.Drawing.Point(3, 46);
+            this.incDate.Name = "incDate";
+            this.incDate.Size = new System.Drawing.Size(133, 17);
+            this.incDate.TabIndex = 17;
+            this.incDate.Text = "Include the date in title";
+            this.incDate.UseVisualStyleBackColor = true;
+            this.incDate.CheckedChanged += new System.EventHandler(this.incDate_CheckedChanged);
+            // 
             // screenshotPanel
             // 
             this.screenshotPanel.Controls.Add(this.incscreenshots);
@@ -400,36 +424,13 @@
             this.didyouknow.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.didyouknow.Visible = false;
             // 
-            // incDate
-            // 
-            this.incDate.AutoSize = true;
-            this.incDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.incDate.Location = new System.Drawing.Point(3, 46);
-            this.incDate.Name = "incDate";
-            this.incDate.Size = new System.Drawing.Size(133, 17);
-            this.incDate.TabIndex = 17;
-            this.incDate.Text = "Include the date in title";
-            this.incDate.UseVisualStyleBackColor = true;
-            this.incDate.CheckedChanged += new System.EventHandler(this.incDate_CheckedChanged);
-            // 
-            // paranthesiscbx
-            // 
-            this.paranthesiscbx.AutoSize = true;
-            this.paranthesiscbx.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.paranthesiscbx.Location = new System.Drawing.Point(3, 66);
-            this.paranthesiscbx.Name = "paranthesiscbx";
-            this.paranthesiscbx.Size = new System.Drawing.Size(118, 17);
-            this.paranthesiscbx.TabIndex = 18;
-            this.paranthesiscbx.Text = "Include paranthesis";
-            this.paranthesiscbx.UseVisualStyleBackColor = true;
-            this.paranthesiscbx.Visible = false;
-            // 
             // Plays
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(39)))), ((int)(((byte)(46)))));
             this.ClientSize = new System.Drawing.Size(525, 418);
+            this.Controls.Add(this.downloadingrn);
             this.Controls.Add(this.didyouknow);
             this.Controls.Add(this.infolbl);
             this.Controls.Add(this.logo);
@@ -451,7 +452,6 @@
             this.Controls.Add(this.pandu);
             this.Controls.Add(this.Downloadbtn);
             this.Controls.Add(this.paypal);
-            this.Controls.Add(this.downloadingrn);
             this.Controls.Add(this.usernamelbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

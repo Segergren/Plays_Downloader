@@ -153,11 +153,11 @@ namespace Plays_Downloader
             }
         }
 
-        private void UpdateSoftware(string GithubProfileLink)
+        /*private void UpdateSoftware(string GithubProfileLink)
         {
             //Updates the software
 
-            /*
+            
             //var fileName = Path.GetTempPath() + @"\O11SoftwareUpdateInfo";
             //System.IO.File.WriteAllText(fileName, GithubProfileLink + "\n" + Application.ExecutablePath);
             
@@ -189,8 +189,8 @@ namespace Plays_Downloader
                 proc.StartInfo.Verb = "runas";
                 proc.Start();
             }            
-            */
-        }
+            
+        }*/
 
         private string GetReleases(string GithubProfileLink)
         {

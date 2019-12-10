@@ -52,6 +52,7 @@ namespace Plays_Downloader
         string sort = "";
         string dateString = "";
         int curdown = 0;
+        int downdone = 0;
         /* EXTRA INFORMATION FOR DID YOU KNOW */
         double infoclipseconds = 0;
         int infoviews = 0;
@@ -128,32 +129,52 @@ namespace Plays_Downloader
             await PutTaskDelay(5000);
             geckoWebBrowser.Navigate("https://plays.tv/home");
             done1 = true;
-            await PutTaskDelay(5000);
 
-            //Checks if the user is logged in or not
-            GeckoNodeCollection links = geckoWebBrowser.Document.GetElementsByClassName("avatar");
             string linkredirect = "";
-            foreach (GeckoElement link in links)
+            while (true)
             {
-                try
+                await PutTaskDelay(5000);
+
+                //Checks if the user is logged in or not
+                GeckoNodeCollection links = geckoWebBrowser.Document.GetElementsByClassName("avatar");
+                
+                foreach (GeckoElement link in links)
                 {
-                    if (link.GetAttribute("href").Length > 0)
+                    try
                     {
-                        linkredirect = link.GetAttribute("href");
+                        if (link.GetAttribute("href").Length > 0)
+                        {
+                            linkredirect = link.GetAttribute("href");
+                        }
+                    }
+                    catch
+                    {
+
                     }
                 }
-                catch
+                if (linkredirect == "")
                 {
+                    try
+                    {
+                        //page-header
+                        GeckoElement loaded = geckoWebBrowser.Document.GetElementById("page-header");
+                        MessageBox.Show("Wrong Username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        
+                        //Restarts the program, because otherwise the geckoWebBrowser bugs
+                        System.Diagnostics.Process.Start(Application.ExecutablePath);
+                        this.Close();
+                        break;
+                    }
+                    catch
+                    {
+
+                    }
 
                 }
-            }
-            if (linkredirect == "")
-            {
-                MessageBox.Show("Wrong Username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //Restarts the program, because otherwise the geckoWebBrowser bugs
-                System.Diagnostics.Process.Start(Application.ExecutablePath);
-                this.Close();
+                else
+                {
+                    break;
+                }
             }
 
             //Redirects to users home video
@@ -341,6 +362,7 @@ namespace Plays_Downloader
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
         {
+            downdone++;
             _completed = true;
         }
 
@@ -398,9 +420,9 @@ namespace Plays_Downloader
                 {
                     step3.ForeColor = Color.Lime;
                     downloadingrn.Visible = true;
-                    downloadingrn.Text = "Downloading: " + (curdown + 1) + "/" + videosfound;
+                    downloadingrn.Text = "Downloaded: " + (downdone) + "/" + videosfound;
 
-                    if ((curdown == videosfound - 1) && (Math.Round(downloadeddone) == Math.Round(downloaded)))
+                    if ((downdone == videosfound) && (Math.Round(downloadeddone) == Math.Round(downloaded)))
                     {
                         done4 = true;
                     }
@@ -428,7 +450,7 @@ namespace Plays_Downloader
         private void closebtn_Click(object sender, EventArgs e)
         {
             //If a video is downloading right now
-            if((curdown != videosfound - 1) && done4 == false && done3 == true)
+            if(done4 == false && done3 == true)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to quit?", "Still downloading...", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
@@ -540,10 +562,12 @@ namespace Plays_Downloader
             dntscreenshots.Hide();
 
             //Login
+
             geckoWebBrowser.Document.GetElementById("login_urlname").SetAttribute("value", usernametb.Text);
             geckoWebBrowser.Document.GetElementById("login_pwd").SetAttribute("value", passwordtb.Text);
             GeckoButtonElement button = new GeckoButtonElement(geckoWebBrowser.Document.GetElementsByClassName("btn")[1].DomObject);
             button.Click();
+
 
             //Hide remaining elements
             Downloadbtn.Hide();
