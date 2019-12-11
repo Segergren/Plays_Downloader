@@ -39,7 +39,7 @@ namespace Plays_Downloader
 
         [DllImport("winmm.dll")]
         public static extern int waveOutSetVolume(IntPtr h, uint dwVolume);
-        
+
 
         //Varibles
         bool continuenow = false;
@@ -112,7 +112,7 @@ namespace Plays_Downloader
             File.Delete(AppDomain.CurrentDomain.BaseDirectory + "temporary.zip");
 
             //Starts the process
-            Load0SiteAsync();           
+            Load0SiteAsync();
         }
 
         private async Task Load0SiteAsync()
@@ -137,7 +137,7 @@ namespace Plays_Downloader
 
                 //Checks if the user is logged in or not
                 GeckoNodeCollection links = geckoWebBrowser.Document.GetElementsByClassName("avatar");
-                
+
                 foreach (GeckoElement link in links)
                 {
                     try
@@ -159,7 +159,7 @@ namespace Plays_Downloader
                         //page-header
                         GeckoElement loaded = geckoWebBrowser.Document.GetElementById("page-header");
                         MessageBox.Show("Wrong Username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        
+
                         //Restarts the program, because otherwise the geckoWebBrowser bugs
                         System.Diagnostics.Process.Start(Application.ExecutablePath);
                         this.Close();
@@ -233,6 +233,8 @@ namespace Plays_Downloader
             List<string> nameList = new List<string>();
             List<string> downloadlinkList = new List<string>();
             List<string> typeList = new List<string>();
+            List<string> gameList = new List<string>();
+            List<string> descriptionList = new List<string>();
             List<string> dateList = new List<string>();
             for (int i = 0; i < items.Count; i++)
             {
@@ -243,7 +245,10 @@ namespace Plays_Downloader
                 string name = item.description;
                 string downloadlink = item.downloadUrl;
                 string type = item.type;
+                string game = item.gameTitle;
+                string description = item.description;
                 string date = item.created;
+
                 if ((dntscreenshots.Checked == true) && (type.Contains("image") == true))
                 {
 
@@ -259,7 +264,10 @@ namespace Plays_Downloader
                         nameList.Add(name);
                         downloadlinkList.Add(downloadlink);
                         typeList.Add(type);
+                        gameList.Add(game);
+                        descriptionList.Add(description);
                         dateList.Add(Convert.ToString(date).Replace("000", ""));
+
                     }
                 }
 
@@ -296,39 +304,88 @@ namespace Plays_Downloader
                 }
                 if (incDate.Checked)
                 {
-                    if(paranthesiscbx.Checked == true)
+                    if (paranthesiscbx.Checked == true)
                     {
-                        dateString =  (" (" + (UnixTimeStampToDateTime(Convert.ToDouble(dateList[i]))).ToShortDateString() + ")").Replace("/","-");
+                        dateString = (" (" + (UnixTimeStampToDateTime(Convert.ToDouble(dateList[i]))).ToShortDateString() + ")").Replace("/", "-");
                     }
                     else
                     {
                         dateString = (" " + (UnixTimeStampToDateTime(Convert.ToDouble(dateList[i]))).ToShortDateString()).Replace("/", "-");
-                    }                   
+                    }
                 }
 
                 //Gets current video information
                 string name = Convert.ToString(nameList[i]);
                 string downloadlink = Convert.ToString(downloadlinkList[i]);
+                string game = Convert.ToString(gameList[i]);
+                string description = Convert.ToString(descriptionList[i]);
                 string type = Convert.ToString(typeList[i]);
 
                 //Replaces bad names
                 Regex illegalInFileName = new Regex(@"[\\/:*?""<>|]");
                 name = illegalInFileName.Replace(name, "_");
                 dateString = illegalInFileName.Replace(dateString, "_");
+                
+                //Tries to get the game if the description is the name of the game.
+                if (game == null)
+                {
+                    if(gameList.Contains(description))
+                    {
+                        game = description;
+                    }
+                    else
+                    {
+                        game = "Unknown";
+                    }                   
+                }
+
                 //Checks if it's an image or not
                 if (type == "image")
                 {
+                    //If the user wants screenshots or not
                     if (incscreenshots.Checked == true)
                     {
-                        DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".jpeg");
+                        //If the user wants it to be put into game-folders
+                        if (includeGameFolders.Checked)
+                        {                               
+
+                            if (!Directory.Exists(path + @"\" + game))
+                            {
+                                Directory.CreateDirectory(path + @"\" + game);                              
+                            }
+                            if (rbUD.Checked)
+                            {
+                                sort = "[" + (Directory.GetFiles(path + @"\" + game).Length + 1) + "] ";
+                            }
+                            DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".jpeg");
+                        }
+                        else
+                        {
+                            DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".jpeg");
+                        }                       
                     }
                 }
                 else
                 {
-                    DownloadFile(downloadlink, path + @"\" + sort + name + dateString +".mp4");
+                    if (includeGameFolders.Checked)
+                    {
+                        if (!Directory.Exists(path + @"\" + game))
+                        {
+                            Directory.CreateDirectory(path + @"\" + game);
+                        }
+                        if (rbUD.Checked)
+                        {
+                            sort = "[" + (Directory.GetFiles(path + @"\" + game).Length + 1) + "] ";
+                        }
+                        DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".mp4");
+                    }
+                    else
+                    {
+                        DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".mp4");
+                    }
                 }
 
-                await PutTaskDelay(3500);
+                await PutTaskDelay(3000);
             }
         }
 
@@ -450,7 +507,7 @@ namespace Plays_Downloader
         private void closebtn_Click(object sender, EventArgs e)
         {
             //If a video is downloading right now
-            if(done4 == false && done3 == true)
+            if (done4 == false && done3 == true)
             {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to quit?", "Still downloading...", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
@@ -557,6 +614,7 @@ namespace Plays_Downloader
             ponly.Hide();
             incDate.Hide();
             paranthesiscbx.Hide();
+            includeGameFolders.Hide();
 
             incscreenshots.Hide();
             dntscreenshots.Hide();
@@ -606,56 +664,71 @@ namespace Plays_Downloader
         {
             /* Updates the "Did you know" text */
 
-            if (infoCounter == 0){
+            if (infoCounter == 0)
+            {
                 didyouknow.Text = "You have " + Math.Round(infoclipseconds / 60) + " minutes worth of clips";
             }
-            else if (infoCounter == 1){
+            else if (infoCounter == 1)
+            {
                 didyouknow.Text = "You have a total of " + infoviews + " views across all " + videosfound + " videos";
             }
-            else if (infoCounter == 2){
+            else if (infoCounter == 2)
+            {
                 didyouknow.Text = "You have a total of " + infocomments + " comments across all " + videosfound + " videos";
             }
 
             else if (infoCounter == 3)
             {
                 string timeposted = "";
-                if (infofirstplays.Date.Hour >= 0 && infofirstplays.Date.Hour <= 5){
+                if (infofirstplays.Date.Hour >= 0 && infofirstplays.Date.Hour <= 5)
+                {
                     timeposted = "in the middle of the night in " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(infofirstplays.Date.Month);
                 }
-                else if (infofirstplays.Date.Hour >= 6 && infofirstplays.Date.Hour <= 9){
+                else if (infofirstplays.Date.Hour >= 6 && infofirstplays.Date.Hour <= 9)
+                {
                     timeposted = "early as fuck on a " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(infofirstplays.Date.Month) + " morning";
                 }
-                else if (infofirstplays.Date.Hour >= 10 && infofirstplays.Date.Hour <= 14){
+                else if (infofirstplays.Date.Hour >= 10 && infofirstplays.Date.Hour <= 14)
+                {
                     timeposted = "in the middle of the day in " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(infofirstplays.Date.Month);
                 }
-                else if (infofirstplays.Date.Hour >= 15 && infofirstplays.Date.Hour <= 17){
+                else if (infofirstplays.Date.Hour >= 15 && infofirstplays.Date.Hour <= 17)
+                {
                     timeposted = "a afternoon in " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(infofirstplays.Date.Month);
                 }
-                else if (infofirstplays.Date.Hour >= 18 && infofirstplays.Date.Hour <= 23){
+                else if (infofirstplays.Date.Hour >= 18 && infofirstplays.Date.Hour <= 23)
+                {
                     timeposted = "on a " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(infofirstplays.Date.Month) + " evening";
                 }
                 didyouknow.Text = "You posted your first video " + timeposted;
             }
 
-            else if (infoCounter == 4){
+            else if (infoCounter == 4)
+            {
                 didyouknow.Text = "Plays was founded 19/12/2016";
             }
-            else if (infoCounter == 5){
+            else if (infoCounter == 5)
+            {
                 didyouknow.Text = "Plays was built by Raptr";
             }
-            else if (infoCounter == 6){
+            else if (infoCounter == 6)
+            {
                 didyouknow.Text = "The first Plays.tv video was uploaded 03/09/2015 by Plays";
             }
-            else if (infoCounter == 7){
+            else if (infoCounter == 7)
+            {
                 didyouknow.Text = "Plays was made in the US";
             }
-            else if (infoCounter == 8){
+            else if (infoCounter == 8)
+            {
                 didyouknow.Text = "Plays had about 10-50 developers";
             }
-            if (infoCounter == 8){
+            if (infoCounter == 8)
+            {
                 infoCounter = 0;
             }
-            else{
+            else
+            {
                 infoCounter++;
             }
 

@@ -63,6 +63,7 @@
             this.infolbl = new System.Windows.Forms.Label();
             this.Infotimer = new System.Windows.Forms.Timer(this.components);
             this.didyouknow = new System.Windows.Forms.Label();
+            this.includeGameFolders = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.closebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minimizebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.folderpicker)).BeginInit();
@@ -340,6 +341,7 @@
             // 
             // screenshotPanel
             // 
+            this.screenshotPanel.Controls.Add(this.includeGameFolders);
             this.screenshotPanel.Controls.Add(this.incscreenshots);
             this.screenshotPanel.Controls.Add(this.dntscreenshots);
             this.screenshotPanel.Location = new System.Drawing.Point(366, 315);
@@ -424,14 +426,27 @@
             this.didyouknow.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.didyouknow.Visible = false;
             // 
+            // includeGameFolders
+            // 
+            this.includeGameFolders.AutoSize = true;
+            this.includeGameFolders.Checked = true;
+            this.includeGameFolders.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.includeGameFolders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
+            this.includeGameFolders.Location = new System.Drawing.Point(3, 46);
+            this.includeGameFolders.Name = "includeGameFolders";
+            this.includeGameFolders.Size = new System.Drawing.Size(120, 17);
+            this.includeGameFolders.TabIndex = 18;
+            this.includeGameFolders.Text = "Create game folders";
+            this.includeGameFolders.UseVisualStyleBackColor = true;
+            // 
             // Plays
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(39)))), ((int)(((byte)(46)))));
             this.ClientSize = new System.Drawing.Size(525, 418);
-            this.Controls.Add(this.downloadingrn);
             this.Controls.Add(this.didyouknow);
+            this.Controls.Add(this.downloadingrn);
             this.Controls.Add(this.infolbl);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.screenshotPanel);
@@ -510,6 +525,7 @@
         private System.Windows.Forms.Label didyouknow;
         private System.Windows.Forms.CheckBox incDate;
         private System.Windows.Forms.CheckBox paranthesiscbx;
+        private System.Windows.Forms.CheckBox includeGameFolders;
     }
 }
 

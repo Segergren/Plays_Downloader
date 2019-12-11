@@ -28,7 +28,7 @@
     <ProductName>PlaysTV Downloader</ProductName>
     <PublisherName>O11Software</PublisherName>
     <SuiteName>O11Software</SuiteName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
