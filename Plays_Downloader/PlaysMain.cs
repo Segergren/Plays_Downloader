@@ -321,23 +321,27 @@ namespace Plays_Downloader
                 string description = Convert.ToString(descriptionList[i]);
                 string type = Convert.ToString(typeList[i]);
 
-                //Replaces bad names
-                Regex illegalInFileName = new Regex(@"[\\/:*?""<>|]");
-                name = illegalInFileName.Replace(name, "_");
-                dateString = illegalInFileName.Replace(dateString, "_");
-                
                 //Tries to get the game if the description is the name of the game.
                 if (game == null)
                 {
-                    if(gameList.Contains(description))
+                    if (gameList.Contains(description))
                     {
                         game = description;
                     }
                     else
                     {
                         game = "Unknown";
-                    }                   
+                    }
                 }
+
+                
+
+                //Replaces bad names
+                Regex illegalName = new Regex(@"[\\/:*?""<>|]");
+                name = illegalName.Replace(name, "_");
+                dateString = illegalName.Replace(dateString, "_");
+                game = illegalName.Replace(game, " ");
+
 
                 //Checks if it's an image or not
                 if (type == "image")
@@ -746,6 +750,11 @@ namespace Plays_Downloader
                 paranthesiscbx.Hide();
                 paranthesiscbx.Checked = false;
             }
+        }
+
+        private void Didyouknow_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
