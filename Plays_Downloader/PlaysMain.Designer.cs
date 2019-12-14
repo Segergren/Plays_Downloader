@@ -64,6 +64,8 @@
             this.infolbl = new System.Windows.Forms.Label();
             this.Infotimer = new System.Windows.Forms.Timer(this.components);
             this.didyouknow = new System.Windows.Forms.Label();
+            this.connected = new System.Windows.Forms.Timer(this.components);
+            this.Refresher = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.closebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minimizebtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.folderpicker)).BeginInit();
@@ -78,10 +80,9 @@
             // 
             this.Downloadbtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
             this.Downloadbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Downloadbtn.Location = new System.Drawing.Point(244, 486);
-            this.Downloadbtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Downloadbtn.Location = new System.Drawing.Point(163, 316);
             this.Downloadbtn.Name = "Downloadbtn";
-            this.Downloadbtn.Size = new System.Drawing.Size(297, 65);
+            this.Downloadbtn.Size = new System.Drawing.Size(198, 42);
             this.Downloadbtn.TabIndex = 3;
             this.Downloadbtn.Text = "Login";
             this.Downloadbtn.UseVisualStyleBackColor = false;
@@ -97,10 +98,9 @@
             // 
             this.st.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.st.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.st.Location = new System.Drawing.Point(318, 14);
-            this.st.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.st.Location = new System.Drawing.Point(212, 9);
             this.st.Name = "st";
-            this.st.Size = new System.Drawing.Size(150, 72);
+            this.st.Size = new System.Drawing.Size(100, 47);
             this.st.TabIndex = 1;
             this.st.Text = "Step";
             this.st.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -110,10 +110,9 @@
             // 
             this.step1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.step1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.step1.Location = new System.Drawing.Point(178, 91);
-            this.step1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.step1.Location = new System.Drawing.Point(119, 59);
             this.step1.Name = "step1";
-            this.step1.Size = new System.Drawing.Size(100, 72);
+            this.step1.Size = new System.Drawing.Size(67, 47);
             this.step1.TabIndex = 2;
             this.step1.Text = "1";
             this.step1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,10 +121,9 @@
             // 
             this.step2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.step2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.step2.Location = new System.Drawing.Point(288, 91);
-            this.step2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.step2.Location = new System.Drawing.Point(192, 59);
             this.step2.Name = "step2";
-            this.step2.Size = new System.Drawing.Size(100, 72);
+            this.step2.Size = new System.Drawing.Size(67, 47);
             this.step2.TabIndex = 3;
             this.step2.Text = "2";
             this.step2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -134,10 +132,9 @@
             // 
             this.step3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.step3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.step3.Location = new System.Drawing.Point(398, 91);
-            this.step3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.step3.Location = new System.Drawing.Point(265, 59);
             this.step3.Name = "step3";
-            this.step3.Size = new System.Drawing.Size(100, 72);
+            this.step3.Size = new System.Drawing.Size(67, 47);
             this.step3.TabIndex = 4;
             this.step3.Text = "3";
             this.step3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -146,10 +143,9 @@
             // 
             this.step4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.step4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.step4.Location = new System.Drawing.Point(507, 91);
-            this.step4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.step4.Location = new System.Drawing.Point(338, 59);
             this.step4.Name = "step4";
-            this.step4.Size = new System.Drawing.Size(100, 72);
+            this.step4.Size = new System.Drawing.Size(67, 47);
             this.step4.TabIndex = 5;
             this.step4.Text = "4";
             this.step4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -157,19 +153,17 @@
             // usernametb
             // 
             this.usernametb.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernametb.Location = new System.Drawing.Point(244, 268);
-            this.usernametb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.usernametb.Location = new System.Drawing.Point(163, 174);
             this.usernametb.Name = "usernametb";
-            this.usernametb.Size = new System.Drawing.Size(295, 40);
+            this.usernametb.Size = new System.Drawing.Size(198, 29);
             this.usernametb.TabIndex = 1;
             // 
             // passwordtb
             // 
             this.passwordtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordtb.Location = new System.Drawing.Point(244, 412);
-            this.passwordtb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.passwordtb.Location = new System.Drawing.Point(163, 268);
             this.passwordtb.Name = "passwordtb";
-            this.passwordtb.Size = new System.Drawing.Size(295, 40);
+            this.passwordtb.Size = new System.Drawing.Size(198, 29);
             this.passwordtb.TabIndex = 2;
             this.passwordtb.UseSystemPasswordChar = true;
             // 
@@ -177,10 +171,9 @@
             // 
             this.usernamelbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.usernamelbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.usernamelbl.Location = new System.Drawing.Point(246, 191);
-            this.usernamelbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.usernamelbl.Location = new System.Drawing.Point(164, 124);
             this.usernamelbl.Name = "usernamelbl";
-            this.usernamelbl.Size = new System.Drawing.Size(294, 72);
+            this.usernamelbl.Size = new System.Drawing.Size(196, 47);
             this.usernamelbl.TabIndex = 8;
             this.usernamelbl.Text = "Username";
             this.usernamelbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -189,10 +182,9 @@
             // 
             this.passwordlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordlbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.passwordlbl.Location = new System.Drawing.Point(244, 335);
-            this.passwordlbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.passwordlbl.Location = new System.Drawing.Point(163, 218);
             this.passwordlbl.Name = "passwordlbl";
-            this.passwordlbl.Size = new System.Drawing.Size(297, 72);
+            this.passwordlbl.Size = new System.Drawing.Size(198, 47);
             this.passwordlbl.TabIndex = 9;
             this.passwordlbl.Text = "Password";
             this.passwordlbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -207,10 +199,9 @@
             // 
             this.downloadingrn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.downloadingrn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.downloadingrn.Location = new System.Drawing.Point(18, 191);
-            this.downloadingrn.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.downloadingrn.Location = new System.Drawing.Point(12, 124);
             this.downloadingrn.Name = "downloadingrn";
-            this.downloadingrn.Size = new System.Drawing.Size(752, 72);
+            this.downloadingrn.Size = new System.Drawing.Size(501, 47);
             this.downloadingrn.TabIndex = 10;
             this.downloadingrn.Text = "0/0";
             this.downloadingrn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -220,10 +211,9 @@
             // 
             this.closebtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.closebtn.Image = ((System.Drawing.Image)(resources.GetObject("closebtn.Image")));
-            this.closebtn.Location = new System.Drawing.Point(729, 2);
-            this.closebtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.closebtn.Location = new System.Drawing.Point(486, 1);
             this.closebtn.Name = "closebtn";
-            this.closebtn.Size = new System.Drawing.Size(57, 57);
+            this.closebtn.Size = new System.Drawing.Size(38, 37);
             this.closebtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.closebtn.TabIndex = 11;
             this.closebtn.TabStop = false;
@@ -233,10 +223,9 @@
             // 
             this.minimizebtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.minimizebtn.Image = ((System.Drawing.Image)(resources.GetObject("minimizebtn.Image")));
-            this.minimizebtn.Location = new System.Drawing.Point(663, 2);
-            this.minimizebtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.minimizebtn.Location = new System.Drawing.Point(442, 1);
             this.minimizebtn.Name = "minimizebtn";
-            this.minimizebtn.Size = new System.Drawing.Size(57, 57);
+            this.minimizebtn.Size = new System.Drawing.Size(38, 37);
             this.minimizebtn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.minimizebtn.TabIndex = 12;
             this.minimizebtn.TabStop = false;
@@ -246,10 +235,9 @@
             // 
             this.folderpicker.Cursor = System.Windows.Forms.Cursors.Hand;
             this.folderpicker.Image = ((System.Drawing.Image)(resources.GetObject("folderpicker.Image")));
-            this.folderpicker.Location = new System.Drawing.Point(364, 560);
-            this.folderpicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.folderpicker.Location = new System.Drawing.Point(243, 364);
             this.folderpicker.Name = "folderpicker";
-            this.folderpicker.Size = new System.Drawing.Size(57, 65);
+            this.folderpicker.Size = new System.Drawing.Size(38, 42);
             this.folderpicker.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.folderpicker.TabIndex = 13;
             this.folderpicker.TabStop = false;
@@ -258,10 +246,9 @@
             // loadingind
             // 
             this.loadingind.Image = ((System.Drawing.Image)(resources.GetObject("loadingind.Image")));
-            this.loadingind.Location = new System.Drawing.Point(321, 268);
-            this.loadingind.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.loadingind.Location = new System.Drawing.Point(214, 174);
             this.loadingind.Name = "loadingind";
-            this.loadingind.Size = new System.Drawing.Size(144, 148);
+            this.loadingind.Size = new System.Drawing.Size(96, 96);
             this.loadingind.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.loadingind.TabIndex = 14;
             this.loadingind.TabStop = false;
@@ -272,10 +259,9 @@
             this.rbName.AutoSize = true;
             this.rbName.Checked = true;
             this.rbName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.rbName.Location = new System.Drawing.Point(4, 0);
-            this.rbName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbName.Location = new System.Drawing.Point(3, 0);
             this.rbName.Name = "rbName";
-            this.rbName.Size = new System.Drawing.Size(134, 24);
+            this.rbName.Size = new System.Drawing.Size(92, 17);
             this.rbName.TabIndex = 15;
             this.rbName.TabStop = true;
             this.rbName.Text = "Sort by NAME";
@@ -285,10 +271,9 @@
             // 
             this.rbUD.AutoSize = true;
             this.rbUD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.rbUD.Location = new System.Drawing.Point(4, 35);
-            this.rbUD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rbUD.Location = new System.Drawing.Point(3, 23);
             this.rbUD.Name = "rbUD";
-            this.rbUD.Size = new System.Drawing.Size(201, 24);
+            this.rbUD.Size = new System.Drawing.Size(137, 17);
             this.rbUD.TabIndex = 16;
             this.rbUD.Text = "Sort by UPLOAD DATE";
             this.rbUD.UseVisualStyleBackColor = true;
@@ -298,10 +283,9 @@
             this.ponly.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
             this.ponly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ponly.ForeColor = System.Drawing.Color.Black;
-            this.ponly.Location = new System.Drawing.Point(244, 558);
-            this.ponly.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ponly.Location = new System.Drawing.Point(163, 363);
             this.ponly.Name = "ponly";
-            this.ponly.Size = new System.Drawing.Size(297, 65);
+            this.ponly.Size = new System.Drawing.Size(198, 42);
             this.ponly.TabIndex = 17;
             this.ponly.Text = "Public only";
             this.ponly.UseVisualStyleBackColor = false;
@@ -313,10 +297,9 @@
             this.pandu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
             this.pandu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.pandu.ForeColor = System.Drawing.Color.Black;
-            this.pandu.Location = new System.Drawing.Point(244, 486);
-            this.pandu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pandu.Location = new System.Drawing.Point(163, 316);
             this.pandu.Name = "pandu";
-            this.pandu.Size = new System.Drawing.Size(297, 65);
+            this.pandu.Size = new System.Drawing.Size(198, 42);
             this.pandu.TabIndex = 18;
             this.pandu.Text = "Public and Unlisted";
             this.pandu.UseVisualStyleBackColor = false;
@@ -329,20 +312,18 @@
             this.sortPanel.Controls.Add(this.incDate);
             this.sortPanel.Controls.Add(this.rbName);
             this.sortPanel.Controls.Add(this.rbUD);
-            this.sortPanel.Location = new System.Drawing.Point(18, 485);
-            this.sortPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.sortPanel.Location = new System.Drawing.Point(12, 315);
             this.sortPanel.Name = "sortPanel";
-            this.sortPanel.Size = new System.Drawing.Size(218, 138);
+            this.sortPanel.Size = new System.Drawing.Size(145, 90);
             this.sortPanel.TabIndex = 20;
             // 
             // paranthesiscbx
             // 
             this.paranthesiscbx.AutoSize = true;
             this.paranthesiscbx.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.paranthesiscbx.Location = new System.Drawing.Point(4, 102);
-            this.paranthesiscbx.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.paranthesiscbx.Location = new System.Drawing.Point(3, 66);
             this.paranthesiscbx.Name = "paranthesiscbx";
-            this.paranthesiscbx.Size = new System.Drawing.Size(174, 24);
+            this.paranthesiscbx.Size = new System.Drawing.Size(118, 17);
             this.paranthesiscbx.TabIndex = 18;
             this.paranthesiscbx.Text = "Include paranthesis";
             this.paranthesiscbx.UseVisualStyleBackColor = true;
@@ -352,10 +333,9 @@
             // 
             this.incDate.AutoSize = true;
             this.incDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.incDate.Location = new System.Drawing.Point(4, 71);
-            this.incDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.incDate.Location = new System.Drawing.Point(3, 46);
             this.incDate.Name = "incDate";
-            this.incDate.Size = new System.Drawing.Size(195, 24);
+            this.incDate.Size = new System.Drawing.Size(133, 17);
             this.incDate.TabIndex = 17;
             this.incDate.Text = "Include the date in title";
             this.incDate.UseVisualStyleBackColor = true;
@@ -366,10 +346,9 @@
             this.screenshotPanel.Controls.Add(this.includeGameFolders);
             this.screenshotPanel.Controls.Add(this.incscreenshots);
             this.screenshotPanel.Controls.Add(this.dntscreenshots);
-            this.screenshotPanel.Location = new System.Drawing.Point(549, 485);
-            this.screenshotPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.screenshotPanel.Location = new System.Drawing.Point(366, 315);
             this.screenshotPanel.Name = "screenshotPanel";
-            this.screenshotPanel.Size = new System.Drawing.Size(237, 138);
+            this.screenshotPanel.Size = new System.Drawing.Size(158, 90);
             this.screenshotPanel.TabIndex = 21;
             // 
             // includeGameFolders
@@ -378,10 +357,9 @@
             this.includeGameFolders.Checked = true;
             this.includeGameFolders.CheckState = System.Windows.Forms.CheckState.Checked;
             this.includeGameFolders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.includeGameFolders.Location = new System.Drawing.Point(4, 71);
-            this.includeGameFolders.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.includeGameFolders.Location = new System.Drawing.Point(3, 46);
             this.includeGameFolders.Name = "includeGameFolders";
-            this.includeGameFolders.Size = new System.Drawing.Size(179, 24);
+            this.includeGameFolders.Size = new System.Drawing.Size(120, 17);
             this.includeGameFolders.TabIndex = 18;
             this.includeGameFolders.Text = "Create game folders";
             this.includeGameFolders.UseVisualStyleBackColor = true;
@@ -391,10 +369,9 @@
             this.incscreenshots.AutoSize = true;
             this.incscreenshots.Checked = true;
             this.incscreenshots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.incscreenshots.Location = new System.Drawing.Point(4, 0);
-            this.incscreenshots.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.incscreenshots.Location = new System.Drawing.Point(3, 0);
             this.incscreenshots.Name = "incscreenshots";
-            this.incscreenshots.Size = new System.Drawing.Size(177, 24);
+            this.incscreenshots.Size = new System.Drawing.Size(120, 17);
             this.incscreenshots.TabIndex = 15;
             this.incscreenshots.TabStop = true;
             this.incscreenshots.Text = "Include screenshots";
@@ -404,10 +381,9 @@
             // 
             this.dntscreenshots.AutoSize = true;
             this.dntscreenshots.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(178)))), ((int)(((byte)(179)))));
-            this.dntscreenshots.Location = new System.Drawing.Point(4, 35);
-            this.dntscreenshots.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dntscreenshots.Location = new System.Drawing.Point(3, 23);
             this.dntscreenshots.Name = "dntscreenshots";
-            this.dntscreenshots.Size = new System.Drawing.Size(217, 24);
+            this.dntscreenshots.Size = new System.Drawing.Size(147, 17);
             this.dntscreenshots.TabIndex = 16;
             this.dntscreenshots.Text = "Don\'t include screenshots";
             this.dntscreenshots.UseVisualStyleBackColor = true;
@@ -416,10 +392,9 @@
             // 
             this.logo.Cursor = System.Windows.Forms.Cursors.Default;
             this.logo.Image = ((System.Drawing.Image)(resources.GetObject("logo.Image")));
-            this.logo.Location = new System.Drawing.Point(4, 6);
-            this.logo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.logo.Location = new System.Drawing.Point(3, 4);
             this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(198, 55);
+            this.logo.Size = new System.Drawing.Size(132, 36);
             this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logo.TabIndex = 22;
             this.logo.TabStop = false;
@@ -428,10 +403,9 @@
             // 
             this.paypal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.paypal.Image = ((System.Drawing.Image)(resources.GetObject("paypal.Image")));
-            this.paypal.Location = new System.Drawing.Point(246, 466);
-            this.paypal.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.paypal.Location = new System.Drawing.Point(164, 303);
             this.paypal.Name = "paypal";
-            this.paypal.Size = new System.Drawing.Size(296, 157);
+            this.paypal.Size = new System.Drawing.Size(197, 102);
             this.paypal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.paypal.TabIndex = 23;
             this.paypal.TabStop = false;
@@ -442,10 +416,9 @@
             // 
             this.infolbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.infolbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.infolbl.Location = new System.Drawing.Point(18, 412);
-            this.infolbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.infolbl.Location = new System.Drawing.Point(12, 268);
             this.infolbl.Name = "infolbl";
-            this.infolbl.Size = new System.Drawing.Size(752, 45);
+            this.infolbl.Size = new System.Drawing.Size(501, 29);
             this.infolbl.TabIndex = 24;
             this.infolbl.Text = "Please consider donating if you support this project";
             this.infolbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -460,22 +433,32 @@
             // 
             this.didyouknow.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.didyouknow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(179)))), ((int)(((byte)(178)))));
-            this.didyouknow.Location = new System.Drawing.Point(18, 455);
-            this.didyouknow.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.didyouknow.Location = new System.Drawing.Point(12, 296);
             this.didyouknow.Name = "didyouknow";
-            this.didyouknow.Size = new System.Drawing.Size(752, 157);
+            this.didyouknow.Size = new System.Drawing.Size(501, 102);
             this.didyouknow.TabIndex = 25;
             this.didyouknow.Text = "Please consider donating if you support this project";
             this.didyouknow.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.didyouknow.Visible = false;
             this.didyouknow.Click += new System.EventHandler(this.Didyouknow_Click);
             // 
+            // connected
+            // 
+            this.connected.Enabled = true;
+            this.connected.Interval = 1000;
+            this.connected.Tick += new System.EventHandler(this.connected_Tick);
+            // 
+            // Refresher
+            // 
+            this.Refresher.Interval = 10000;
+            this.Refresher.Tick += new System.EventHandler(this.Refresher_Tick);
+            // 
             // Plays
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(39)))), ((int)(((byte)(46)))));
-            this.ClientSize = new System.Drawing.Size(788, 643);
+            this.ClientSize = new System.Drawing.Size(525, 418);
             this.Controls.Add(this.didyouknow);
             this.Controls.Add(this.downloadingrn);
             this.Controls.Add(this.infolbl);
@@ -501,7 +484,6 @@
             this.Controls.Add(this.usernamelbl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Plays";
             this.Text = "Plays";
             this.Load += new System.EventHandler(this.Plays_Load);
@@ -558,6 +540,8 @@
         private System.Windows.Forms.CheckBox incDate;
         private System.Windows.Forms.CheckBox paranthesiscbx;
         private System.Windows.Forms.CheckBox includeGameFolders;
+        private System.Windows.Forms.Timer connected;
+        private System.Windows.Forms.Timer Refresher;
     }
 }
 

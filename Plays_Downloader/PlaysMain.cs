@@ -131,7 +131,7 @@ namespace Plays_Downloader
             done1 = true;
 
             string linkredirect = "";
-            while (true)
+            while (linkredirect == "")
             {
                 await PutTaskDelay(5000);
 
@@ -152,28 +152,14 @@ namespace Plays_Downloader
 
                     }
                 }
-                if (linkredirect == "")
+                if (linkredirect != "")
                 {
-                    try
-                    {
-                        //page-header
-                        GeckoElement loaded = geckoWebBrowser.Document.GetElementById("page-header");
-                        MessageBox.Show("Wrong Username or password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        //Restarts the program, because otherwise the geckoWebBrowser bugs
-                        System.Diagnostics.Process.Start(Application.ExecutablePath);
-                        this.Close();
-                        break;
-                    }
-                    catch
-                    {
-
-                    }
-
+                    break;
                 }
                 else
                 {
-                    break;
+                    geckoWebBrowser.Navigate("https://plays.tv/home");
+                    await PutTaskDelay(10000);
                 }
             }
 
@@ -183,7 +169,20 @@ namespace Plays_Downloader
             done2 = true;
 
             //Gets users ID
-            GeckoElement VideoJSONtemp = (GeckoElement)geckoWebBrowser.Document.GetElementsByClassName("full-width header-profile")[0];
+            GeckoElement VideoJSONtemp;
+            while (true)
+            {
+                try
+                {
+                    VideoJSONtemp = (GeckoElement)geckoWebBrowser.Document.GetElementsByClassName("full-width header-profile")[0];
+                    break;
+                }
+                catch
+                {
+                    setTextSafe("Plays servers are slow today. Still loading...");
+                    await PutTaskDelay(3000);
+                }
+            }
             string JSON = Convert.ToString(VideoJSONtemp.GetAttribute("data-conf"));
             dynamic details = JValue.Parse(JSON);
 
@@ -193,7 +192,7 @@ namespace Plays_Downloader
 
             string JSONformated = "";
             int retrying = 0;
-            while (retrying < 10)
+            while (retrying < 100)
             {
                 //Tries to get the JSON, you need to be logged in to get unlisted videos
                 try
@@ -202,7 +201,7 @@ namespace Plays_Downloader
                     if (!JSONunformated.Contains("</pre></body>"))
                     {
                         retrying++;
-                        setTextSafe("Retrying: " + retrying + "/10");
+                        setTextSafe("Retrying: " + retrying + "/100");
                         await PutTaskDelay(3500);
                     }
                     else
@@ -214,11 +213,11 @@ namespace Plays_Downloader
                 catch
                 {
                     retrying++;
-                    setTextSafe("Retrying: " + retrying + "/10");
+                    setTextSafe("Retrying: " + retrying + "/100");
                     await PutTaskDelay(3500);
                 }
             }
-            if (retrying > 10)
+            if (retrying > 100)
             {
                 MessageBox.Show("Can't access Plays.TV api...", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
@@ -580,7 +579,12 @@ namespace Plays_Downloader
                 step2.ForeColor = Color.Lime;
                 downloadingrn.Visible = true;
                 if (!downloadingrn.Text.Contains("Retrying:"))
-                    downloadingrn.Text = "Loading...";
+                {
+                    if(!downloadingrn.Text.Contains("Plays servers are slow today...")){
+                        downloadingrn.Text = "Loading...";
+                    }                  
+                }
+                    
             }
             else if (done1)
             {
@@ -839,6 +843,32 @@ namespace Plays_Downloader
         private void Didyouknow_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void connected_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                geckoWebBrowser.Document.GetElementById("login_urlname").SetAttribute("value", "");
+                Refresher.Stop();
+                connected.Stop();
+                Downloadbtn.Enabled = true;
+                Downloadbtn.Text = "Login";
+            }
+            catch
+            {
+                Downloadbtn.Enabled = false;
+                Downloadbtn.Text = "Connecting to Plays... This can take up to 1 minute.";
+                if(Refresher.Enabled == false)
+                {
+                    Refresher.Start();
+                }
+            }
+        }
+
+        private void Refresher_Tick(object sender, EventArgs e)
+        {
+            geckoWebBrowser.Navigate("https://plays.tv/login");
         }
     }
 }
