@@ -320,6 +320,8 @@ namespace Plays_Downloader
                 string description = Convert.ToString(descriptionList[i]);
                 string type = Convert.ToString(typeList[i]);
 
+                
+
                 //Tries to get the game if the description is the name of the game.
                 if (game == null)
                 {
@@ -342,18 +344,79 @@ namespace Plays_Downloader
                 game = illegalName.Replace(game, " ");
 
 
-
-
-                //Checks if it's an image or not
-                if (type == "image")
+                try
                 {
-                    //If the user wants screenshots or not
-                    if (incscreenshots.Checked == true)
+                    //Checks if it's an image or not
+                    if (type == "image")
                     {
-                        //If the user wants it to be put into game-folders
+                        //If the user wants screenshots or not
+                        if (incscreenshots.Checked == true)
+                        {
+                            //If the user wants it to be put into game-folders
+                            if (includeGameFolders.Checked)
+                            {
+
+                                if (!Directory.Exists(path + @"\" + game))
+                                {
+                                    Directory.CreateDirectory(path + @"\" + game);
+                                }
+                                if (rbUD.Checked)
+                                {
+                                    sort = "[" + (Directory.GetFiles(path + @"\" + game).Length + 1) + "] ";
+                                }
+
+                                if (!File.Exists(path + @"\" + game + @"\" + sort + name + dateString + ".jpeg"))
+                                {
+                                    DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".jpeg");
+                                    break;
+                                }
+                                else
+                                {
+                                    int addIfExists = 1;
+                                    while (true)
+                                    {
+                                        if (!File.Exists(path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg"))
+                                        {
+                                            DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            addIfExists++;
+                                        }
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                if (!File.Exists(path + @"\" + sort + name + dateString + ".jpeg"))
+                                {
+                                    DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".jpeg");
+                                }
+                                else
+                                {
+                                    int addIfExists = 1;
+                                    while (true)
+                                    {
+                                        if (!File.Exists(path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg"))
+                                        {
+                                            DownloadFile(downloadlink, path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            addIfExists++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
                         if (includeGameFolders.Checked)
                         {
-
                             if (!Directory.Exists(path + @"\" + game))
                             {
                                 Directory.CreateDirectory(path + @"\" + game);
@@ -363,19 +426,18 @@ namespace Plays_Downloader
                                 sort = "[" + (Directory.GetFiles(path + @"\" + game).Length + 1) + "] ";
                             }
 
-                            if (!File.Exists(path + @"\" + game + @"\" + sort + name + dateString + ".jpeg"))
+                            if (!File.Exists(path + @"\" + game + @"\" + sort + name + dateString + ".mp4"))
                             {
-                                DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".jpeg");
-                                break;
+                                DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".mp4");
                             }
                             else
                             {
                                 int addIfExists = 1;
                                 while (true)
                                 {
-                                    if (!File.Exists(path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg"))
+                                    if (!File.Exists(path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4"))
                                     {
-                                        DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg");
+                                        DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4");
                                         break;
                                     }
                                     else
@@ -388,18 +450,19 @@ namespace Plays_Downloader
                         }
                         else
                         {
-                            if (!File.Exists(path + @"\" + sort + name + dateString + ".jpeg"))
+                            // DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".mp4");
+                            if (!File.Exists(path + @"\" + sort + name + dateString + ".mp4"))
                             {
-                                DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".jpeg");
+                                DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".mp4");
                             }
                             else
                             {
                                 int addIfExists = 1;
                                 while (true)
                                 {
-                                    if (!File.Exists(path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg"))
+                                    if (!File.Exists(path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4"))
                                     {
-                                        DownloadFile(downloadlink, path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".jpeg");
+                                        DownloadFile(downloadlink, path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4");
                                         break;
                                     }
                                     else
@@ -411,65 +474,10 @@ namespace Plays_Downloader
                         }
                     }
                 }
-                else
+                catch
                 {
-                    if (includeGameFolders.Checked)
-                    {
-                        if (!Directory.Exists(path + @"\" + game))
-                        {
-                            Directory.CreateDirectory(path + @"\" + game);
-                        }
-                        if (rbUD.Checked)
-                        {
-                            sort = "[" + (Directory.GetFiles(path + @"\" + game).Length + 1) + "] ";
-                        }
-
-                        if (!File.Exists(path + @"\" + game + @"\" + sort + name + dateString + ".mp4"))
-                        {
-                            DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + dateString + ".mp4");
-                        }
-                        else
-                        {
-                            int addIfExists = 1;
-                            while (true)
-                            {
-                                if (!File.Exists(path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4"))
-                                {
-                                    DownloadFile(downloadlink, path + @"\" + game + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4");
-                                    break;
-                                }
-                                else
-                                {
-                                    addIfExists++;
-                                }
-                            }
-                        }
-                        
-                    }
-                    else
-                    {
-                        // DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".mp4");
-                        if (!File.Exists(path + @"\" + sort + name + dateString + ".mp4"))
-                        {
-                            DownloadFile(downloadlink, path + @"\" + sort + name + dateString + ".mp4");
-                        }
-                        else
-                        {
-                            int addIfExists = 1;
-                            while (true)
-                            {
-                                if (!File.Exists(path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4"))
-                                {
-                                    DownloadFile(downloadlink, path + @"\" + sort + name + "(" + addIfExists + ")" + dateString + ".mp4");
-                                    break;
-                                }
-                                else
-                                {
-                                    addIfExists++;
-                                }
-                            }
-                        }
-                    }
+                    //If an error occured.
+                    MessageBox.Show("Plays did not provide any download link to the video called: " + name + "\nYou will need to download it manually.\nClick OK to continue downloading the rest of the videos.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 await PutTaskDelay(3000);
