@@ -19,3 +19,5 @@ Enter your username and password, and click the folder to choose your download d
 #### 4. Click Login
 
 ...and you're off!
+
+![Image of Program](https://o11.dev/plays.PNG)
